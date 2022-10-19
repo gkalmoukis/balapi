@@ -26,7 +26,11 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        //
+        $validated = $request->validated();
+        
+        $newTeam = Team::create($validated);
+
+        return response()->json(new TeamResource($newTeam));
     }
 
     /**
