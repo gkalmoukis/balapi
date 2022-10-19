@@ -53,9 +53,15 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTeamRequest $request, Team $team)
+    public function update(UpdateTeamRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $team = Team::findOrFail($id);
+
+        $updated = $team->update($validated);
+
+        return $updated;
     }
 
     /**

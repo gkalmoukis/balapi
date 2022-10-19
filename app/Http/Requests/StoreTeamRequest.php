@@ -24,7 +24,7 @@ class StoreTeamRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string', 'unique:App\Models\Team,name']
+            'name' => ['required','string']
         ];
     }
 }
