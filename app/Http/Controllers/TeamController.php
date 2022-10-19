@@ -39,9 +39,11 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show($id)
     {
-        //
+        $team = Team::findOrFail($id);
+
+        return response()->json(new TeamResource($team));
     }
 
     /**
