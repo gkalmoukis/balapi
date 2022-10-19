@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
 use App\Models\Team;
-
+use App\Http\Resources\{TeamResource, TeamCollection};
 class TeamController extends Controller
 {
     /**
@@ -15,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(new TeamCollection(Team::all()));
     }
 
     /**
