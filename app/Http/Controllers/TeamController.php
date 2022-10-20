@@ -41,7 +41,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        $team = Team::findOrFail($id);
+        $team = Team::with('players')->findOrFail($id);
 
         return response()->json(new TeamResource($team));
     }
