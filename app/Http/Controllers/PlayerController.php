@@ -73,8 +73,14 @@ class PlayerController extends Controller
      * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Player $player)
+    public function destroy($id)
     {
-        //
+        $player = Player::findOrFail($id);
+    
+        $player->delete();
+
+        return response()->json([
+            "message" => "Player {$id} deleted" 
+        ]);
     }
 }
