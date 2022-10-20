@@ -40,9 +40,11 @@ class PlayerController extends Controller
      * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function show(Player $player)
+    public function show($id)
     {
-        //
+        $player = Player::findOrFail($id);
+
+        return response()->json(new PlayerResource($player));
     }
 
     /**
