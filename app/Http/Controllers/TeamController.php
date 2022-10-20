@@ -72,8 +72,14 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
+    public function destroy($id)
     {
-        //git
+        $team = Team::findOrFail($id);
+    
+        $team->delete();
+
+        return response()->json([
+            "message" => "Team {$id} deleted" 
+        ]);
     }
 }
