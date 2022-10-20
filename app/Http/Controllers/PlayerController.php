@@ -27,7 +27,11 @@ class PlayerController extends Controller
      */
     public function store(StorePlayerRequest $request)
     {
+        $validated = $request->validated();
         
+        $newPlayer = Player::create($validated);
+
+        return response()->json(new PlayerResource($newPlayer));
     }
 
     /**
