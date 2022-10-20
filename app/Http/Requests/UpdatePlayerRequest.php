@@ -24,7 +24,8 @@ class UpdatePlayerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'number' => ['required', 'numeric']
         ];
     }
 }
