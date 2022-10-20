@@ -11,4 +11,13 @@ class Game extends Model
 
     protected $guarded = [];
     
+    public function teamA()
+    {
+        return $this->hasOne(Team::class, 'team_a_id');
+    }
+    
+    public function teamB()
+    {
+        return $this->hasOne(Team::class, 'team_b_id');
+    }
 }
