@@ -24,7 +24,7 @@ class StoreTeamPlayerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "player_id" => ['required', 'numeric', 'exists:players,id']
         ];
     }
 }

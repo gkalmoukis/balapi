@@ -4,6 +4,7 @@ use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\TeamPlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,5 @@ use App\Http\Controllers\PlayerController;
 */
 
 Route::apiResource('teams', TeamController::class);
+Route::put('teams/{teamId}/players', [TeamPlayerController::class, 'store']);
 Route::apiResource('players', PlayerController::class);
