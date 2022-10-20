@@ -24,7 +24,10 @@ class UpdateGameRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "team_a_id" => ['required', 'numeric', 'exists:teams,id'],
+            "team_b_id" => ['required', 'numeric', 'exists:teams,id'],
+            "team_a_goals" => ['required', 'numeric'],
+            "team_b_goals" => ['required', 'numeric'],
         ];
     }
 }
