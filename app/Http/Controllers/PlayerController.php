@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePlayerRequest;
 use App\Http\Requests\UpdatePlayerRequest;
 use App\Models\Player;
+use App\Http\Resources\{PlayerResource, PlayerCollection};
 
 class PlayerController extends Controller
 {
@@ -15,7 +16,7 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(new PlayerCollection(Player::all()));
     }
 
     /**
@@ -26,7 +27,7 @@ class PlayerController extends Controller
      */
     public function store(StorePlayerRequest $request)
     {
-        //
+        
     }
 
     /**
