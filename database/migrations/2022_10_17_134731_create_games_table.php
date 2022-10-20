@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_a_id');
+            $table->foreignId('team_b_id');
+            $table->integer('team_a_goals');
+            $table->integer('team_b_goals');
             $table->timestamps();
         });
     }

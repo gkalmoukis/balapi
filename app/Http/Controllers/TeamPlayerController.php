@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeamPlayerRequest;
-use App\Http\Requests\UpdateTeamPlayerRequest;
 use App\Models\Team;
-use App\Models\TeamPlayer;
-use App\Http\Resources\TeamCollection;
+
 use App\Http\Resources\TeamResource;
 
 class TeamPlayerController extends Controller
