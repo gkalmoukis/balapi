@@ -3,6 +3,7 @@
 use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
