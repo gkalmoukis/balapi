@@ -59,9 +59,11 @@ class TeamController extends Controller
 
         $team = Team::findOrFail($id);
 
-        $updated = $team->update($validated);
+        $team->update($validated);
 
-        return $updated;
+        $modifiedTeam = Team::findOrFail($id); 
+
+        return response()->json(new TeamResource($modifiedTeam));
     }
 
     /**
@@ -72,6 +74,6 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        //
+        //git
     }
 }
