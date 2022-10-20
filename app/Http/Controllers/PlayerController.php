@@ -54,9 +54,17 @@ class PlayerController extends Controller
      * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePlayerRequest $request, Player $player)
+    public function update(UpdatePlayerRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $player = Player::findOrFail($id);
+
+        $player->update($validated);
+
+        $modifiedPlayer = Player::findOrFail($id); 
+
+        return response()->json(new PlayerResource($modifiedPlayer));
     }
 
     /**
