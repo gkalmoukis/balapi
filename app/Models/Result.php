@@ -19,6 +19,6 @@ class Result extends Model
 
     public function winner()
     {
-        return $this->hasOne(Team::class);
+        return $this->belongsTo(Team::class, 'team_id');
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\TeamPlayerController;
 
 /*
@@ -23,3 +24,9 @@ Route::put('teams/{teamId}/players', [TeamPlayerController::class, 'store']);
 Route::delete('teams/{teamId}/players/{playerId}', [TeamPlayerController::class, 'destroy']);
 Route::apiResource('players', PlayerController::class);
 Route::apiResource('games', GameController::class);
+Route::group([
+    'prefix' => 'results'
+], function ()
+{
+    Route::get('/', [ResultController::class, 'index']);
+});
