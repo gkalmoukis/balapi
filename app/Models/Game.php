@@ -20,4 +20,9 @@ class Game extends Model
     {
         return $this->belongsTo(Team::class, 'team_b_id');
     }
+
+    public function result()
+    {
+        return $this->hasOne(Result::class);
+    }
 }
