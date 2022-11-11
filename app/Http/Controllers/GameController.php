@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
+use App\Http\Resources\{GameCollection, GameResource};
 
 class GameController extends Controller
 {
@@ -15,7 +16,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(new GameCollection(Game::with('teamA.players', 'teamB.players')->get()));
     }
 
     /**
@@ -26,7 +27,11 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
-        //
+        $validated = $request->validated();
+        
+        $newGame = Game::create($validated);
+
+        return response()->json(new GameResource($newGame));
     }
 
     /**
@@ -35,9 +40,11 @@ class GameController extends Controller
      * @param  \App\Models\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function show(Game $game)
+    public function show($id)
     {
-        //
+        $game = Game::findOrFail($id);
+
+        return response()->json(new GameResource($game));
     }
 
     /**
@@ -47,9 +54,17 @@ class GameController extends Controller
      * @param  \App\Models\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGameRequest $request, Game $game)
+    public function update(UpdateGameRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $game = Game::findOrFail($id);
+
+        $game->update($validated);
+
+        $modifiedGame = Game::findOrFail($id); 
+
+        return response()->json(new GameResource($modifiedGame));
     }
 
     /**
@@ -58,8 +73,14 @@ class GameController extends Controller
      * @param  \App\Models\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy($id)
     {
-        //
+        $game = Game::findOrFail($id);
+    
+        $game->delete();
+
+        return response()->json([
+            "message" => "Game {$id} deleted" 
+        ]);
     }
 }

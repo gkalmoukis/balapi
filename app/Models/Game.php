@@ -13,11 +13,11 @@ class Game extends Model
     
     public function teamA()
     {
-        return $this->hasOne(Team::class, 'team_a_id');
+        return $this->belongsTo(Team::class, 'team_a_id');
     }
     
     public function teamB()
     {
-        return $this->hasOne(Team::class, 'team_b_id');
+        return $this->belongsTo(Team::class, 'team_b_id');
     }
 }
