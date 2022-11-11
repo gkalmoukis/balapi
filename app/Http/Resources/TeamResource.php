@@ -18,6 +18,7 @@ class TeamResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "players" => new PlayerCollection($this->whenLoaded('players')) ,
+            "points" => $this->whenLoaded( 'results', (int) $this->results_sum_points),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at
         ];

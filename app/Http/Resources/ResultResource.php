@@ -15,10 +15,11 @@ class ResultResource extends JsonResource
      */
     public function toArray($request)
     {
+        
+
         return [
             "id" => $this->id,
-            "game" =>  new GameResource($this->game),
-            "winner" => new TeamResource($this->winner),
+            "team" =>  new TeamResource($this->team),
             "points" => $this->points
         ];
     }

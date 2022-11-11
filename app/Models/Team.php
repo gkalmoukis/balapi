@@ -15,4 +15,8 @@ class Team extends Model
     {
         return $this->belongsToMany(Player::class, 'team_players');
     }
+
+    public function results(){
+        return $this->hasMany(Result::class);
+    }
 }

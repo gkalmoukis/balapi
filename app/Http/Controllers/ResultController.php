@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Result;
+use App\Models\{
+    Result,
+    Team
+};
 use Illuminate\Http\Request;
-use App\Http\Resources\{ResultCollection, ResultResource};
+use App\Http\Resources\{ResultCollection, ResultResource, TeamCollection};
 
 class ResultController extends Controller
 {
@@ -15,7 +18,13 @@ class ResultController extends Controller
      */
     public function index()
     {
-        return response()->json(new ResultCollection(Result::all()));
+        $teams = Team::with('players')
+            ->with('results')
+            ->withSum('results', 'points')
+            ->orderBy('results_sum_points', 'desc')
+            ->get();
+        
+        return response()->json(new TeamCollection($teams));
     }
 
     /**
