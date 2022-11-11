@@ -17,7 +17,7 @@ class TeamPlayerController extends Controller
 
         $team->players()->attach($validated);
 
-        return response()->json(new TeamResource($team));
+        return response()->json(new TeamResource(Team::with('players')->findOrFail($id)));
 
     }
 
@@ -28,7 +28,7 @@ class TeamPlayerController extends Controller
         if(!$team->players()->detach($playerId)){
             return response()->json("Oops, Player {$playerId} was not found in team {$teamId}", 404);
         }
-
+        
         return response()->json("Player {$playerId} detached from team {$teamId}");
 
         
