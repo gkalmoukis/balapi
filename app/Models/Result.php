@@ -17,6 +17,11 @@ class Result extends Model
         return $this->belongsTo(Game::class);
     }
 
+    public function scopeChampionship($query, $championshipId)
+    {
+        return $query->where('championship_id', $championshipId);
+    }
+
     public function winner()
     {
         return $this->belongsTo(Team::class, 'team_id');
