@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChampionshipController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::put('teams/{teamId}/players', [TeamPlayerController::class, 'store']);
 Route::delete('teams/{teamId}/players/{playerId}', [TeamPlayerController::class, 'destroy']);
 Route::apiResource('players', PlayerController::class);
 Route::apiResource('games', GameController::class);
+Route::apiResource('championships', ChampionshipController::class);
 Route::group([
     'prefix' => 'results'
 ], function ()

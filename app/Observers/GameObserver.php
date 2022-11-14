@@ -27,8 +27,9 @@ class GameObserver
         
 
 
-
-        SlackAlert::message(":soccer: {$game->teamA->name} {$game->team_a_goals} - {$game->team_b_goals} {$game->teamB->name} :soccer:");
+        if(config('slack-alerts.must_notify')){
+            SlackAlert::message(":soccer: {$game->teamA->name} {$game->team_a_goals} - {$game->team_b_goals} {$game->teamB->name} :soccer:");
+        }
     }
 
     /**
