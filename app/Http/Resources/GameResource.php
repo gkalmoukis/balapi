@@ -20,6 +20,7 @@ class GameResource extends JsonResource
             "team_b" => $this->teamB,
             "team_a_goals" => $this->team_a_goals,
             "team_b_goals" => $this->team_b_goals,
+            "championship" => $this->when(! is_null($this->championship_id), $this->championship ),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at  
         ];
