@@ -19,7 +19,7 @@ class ChampionshipResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "games" => new GameCollection($this->whenLoaded('games')),
-            "teams" => new TeamCollection($this->when(! is_null($this->teams),$this->teams)),
+            "results" => new TeamCollection($this->when(! is_null($this->teams),$this->teams)),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at
         ];
