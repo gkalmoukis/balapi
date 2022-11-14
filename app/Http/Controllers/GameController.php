@@ -29,7 +29,15 @@ class GameController extends Controller
     {
         $validated = $request->validated();
         
-        $newGame = Game::create($validated);
+        try {
+            $newGame = Game::create($validated);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => $e->getMessage()
+            ], 400);
+        }
+        
 
         return response()->json(new GameResource($newGame));
     }
@@ -60,7 +68,14 @@ class GameController extends Controller
 
         $game = Game::findOrFail($id);
 
-        $game->update($validated);
+        try {
+            $game->update($validated);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => $e->getMessage()
+            ], 400);
+        }
 
         $modifiedGame = Game::findOrFail($id); 
 
