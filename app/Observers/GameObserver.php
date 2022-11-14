@@ -3,10 +3,12 @@
 namespace App\Observers;
 
 use App\Models\{Game, Result};
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
 
 class GameObserver
 {
-    /**
+    /**SlackAlert
      * Handle the Game "created" event.
      *
      * @param  \App\Models\Game  $game
@@ -21,6 +23,12 @@ class GameObserver
         ];
 
         Result::create($result);
+
+        
+
+
+
+        SlackAlert::message(":soccer: {$game->teamA->name} {$game->team_a_goals} - {$game->team_b_goals} {$game->teamB->name} :soccer:");
     }
 
     /**
