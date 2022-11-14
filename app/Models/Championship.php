@@ -15,4 +15,14 @@ class Championship extends Model
     {
         return $this->hasMany(Game::class);
     }
+
+    public function scopeOpen($query)
+    {
+        return $query->whereNull('finished_at');
+    }
+
+    public function scopeFinished($query)
+    {
+        return $query->whereNotNull('finished_at');
+    }
 }

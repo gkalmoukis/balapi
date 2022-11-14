@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('championships', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->date('finished_at')->nullable();
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use App\Http\Requests\StoreChampionshipRequest;
 use App\Http\Requests\UpdateChampionshipRequest;
 use App\Http\Resources\{ChampionshipCollection, ChampionshipResource, TeamCollection};
 use App\Models\{Championship, Team};
-
+use Carbon\Carbon;
 
 class ChampionshipController extends Controller
 {
@@ -17,7 +17,20 @@ class ChampionshipController extends Controller
      */
     public function index()
     {
-        return response()->json(new ChampionshipCollection(Championship::all()));
+        $championships = Championship::all();
+
+        if(request()->filled('status')){
+            
+            if(request()->input('status') == 'open'){
+                $championships = Championship::open()->get();
+            }
+
+            if(request()->input('status') == 'finished'){
+                $championships = Championship::finished()->get();
+            }
+        }
+
+        return response()->json(new ChampionshipCollection($championships));
     }
 
     /**
@@ -82,6 +95,26 @@ class ChampionshipController extends Controller
         $championship = Championship::findOrFail($id);
 
         $championship->update($validated);
+
+        $modifiedChampionship = Championship::findOrFail($id); 
+
+        return response()->json(new ChampionshipResource($modifiedChampionship));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateChampionshipRequest  $request
+     * @param  \App\Models\Championship  $championship
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus($id)
+    {
+        $championship = Championship::findOrFail($id);
+
+        $championship->update([
+            "finished_at" => \Carbon\Carbon::now()
+        ]);
 
         $modifiedChampionship = Championship::findOrFail($id); 
 
