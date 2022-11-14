@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('game_id');
             $table->foreignId('team_id');
-            $table->foreignId('championship_id');
+            $table->foreignId('championship_id')->nullable()->constrained('championships');
             $table->integer('points');
             $table->timestamps();
         });

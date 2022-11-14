@@ -54,8 +54,6 @@ class ChampionshipController extends Controller
             return $game->team_b_id;
         });
 
-        
-
         $teams = Team::with('players')
             ->with('results')
             ->withSum(['results' => function ($query) use ($id){
@@ -65,11 +63,8 @@ class ChampionshipController extends Controller
             ->whereIn('id', array_merge($participatingATeams->unique()->toArray(), $participatingBTeams->unique()->toArray()))
             ->get();
 
-        $championship->teams =  new TeamCollection($teams);
-        
-        // return response()->json($championship->teams);
+        $championship->teams =  $teams;
        
-
         return response()->json(new ChampionshipResource($championship));
     }
 
