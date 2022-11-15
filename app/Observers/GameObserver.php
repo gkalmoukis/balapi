@@ -90,6 +90,6 @@ class GameObserver
      */
     public function deleted(Game $game)
     {
-        // $this->games->deleteResult($game->id);
+        $game->result()->delete();
     }
 }
