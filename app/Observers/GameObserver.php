@@ -5,10 +5,16 @@ namespace App\Observers;
 use App\Models\{Game, Result};
 use Illuminate\Support\Facades\Log;
 use Spatie\SlackAlerts\Facades\SlackAlert;
-
+use App\Repositories\{ResultRepository, GameRepository};
 
 class GameObserver
 {
+
+    public function __construct(
+        protected ResultRepository $results,
+        protected GameRepository $games
+    ) {}
+
     public function creating(Game $game)
     {
         if(is_null($game->championship_id)){
@@ -35,7 +41,7 @@ class GameObserver
             "championship_id" => $game->championship_id ?? null
         ];
 
-        Result::create($result);
+        $this->results->create($result);
         
         $slackLogText = (! is_null($game->championship_id)) ? ":soccer: {$game->championship->title} | "  : ":soccer: ";  
         $slackLogText .=  "{$game->teamA->name} {$game->team_a_goals} - {$game->team_b_goals} {$game->teamB->name} :soccer:";
@@ -73,7 +79,7 @@ class GameObserver
             "championship_id" => $game->championship_id ?? null
         ];
 
-        $game->result()->update($result);
+        $this->games->updateResult($game->id, $result);
     }
 
     /**
@@ -84,6 +90,6 @@ class GameObserver
      */
     public function deleted(Game $game)
     {
-        $game->result()->delete();
+        $this->games->deleteResult($game->id);
     }
 }
