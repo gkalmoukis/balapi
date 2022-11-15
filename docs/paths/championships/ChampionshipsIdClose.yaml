@@ -1,0 +1,17 @@
+get:
+  tags:
+    - Championships
+  summary: "Close Championships"
+  operationId: closeChampionships
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}

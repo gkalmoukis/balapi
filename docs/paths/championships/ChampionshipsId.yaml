@@ -1,0 +1,54 @@
+get:
+  tags:
+    - Championships
+  summary: "Show Championships"
+  operationId: showChampionships
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+put:
+  tags:
+    - Championships
+  summary: "Edit Championships"
+  operationId: editChampionships
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Championship.yaml"
+    responses:
+      "200":
+        description: "ok"
+        content:
+          application/json:
+            schema: {}
+delete:
+  tags:
+    - Championships
+  summary: "Delete Championships"
+  operationId: deleteChampionships
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"

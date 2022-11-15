@@ -20,3 +20,9 @@ paths:
     $ref: "./paths/teams/TeamsIdPlayers.yaml"
   /teams/{teamId}/players/{playerId}:
     $ref: "./paths/teams/TeamsIdPlayersId.yaml"
+  /championships:
+    $ref: "./paths/championships/Championships.yaml"
+  /championships/{id}:
+    $ref: "./paths/championships/ChampionshipsId.yaml"
+  /championships/{id}/close:
+    $ref: "./paths/championships/ChampionshipsIdClose.yaml"

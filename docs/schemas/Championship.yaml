@@ -1,0 +1,6 @@
+required:
+  - title
+properties:
+  name:
+    type: string
+type: object
