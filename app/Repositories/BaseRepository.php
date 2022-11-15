@@ -5,21 +5,21 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository {
-    
+
     protected $data;
 
     public function __construct(
         protected Model $model
     ) {}
 
-    public function all(array $relations = []) {
+    public function getAll(array $relations = []) {
         return $this
             ->model
             ->with($relations)
             ->get();
     }
 
-    public function allPaginated(array $relations = [])
+    public function getAllPaginated(array $relations = [])
     {
         return $this
             ->model
@@ -35,17 +35,25 @@ class BaseRepository {
             ->create($attributes);
     }
 
-    public function findById($id, $relations = [])
+    public function update($id, array $attributes)
     {
-        $this->data = $this
+        return $this
+            ->getById($id)
+            ->update($attributes);
+    }
+
+    public function delete($id)
+    {
+        return $this
+            ->getById($id)
+            ->delete();
+    }
+
+    public function getById($id, $relations = [])
+    {
+        return $this
             ->model
             ->with($relations)
             ->findOrFail($id);
-
-        return $this;
-    }
-
-    public function get(){
-        return $this->data;
     }
 }

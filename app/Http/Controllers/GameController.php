@@ -6,9 +6,14 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use App\Http\Resources\{GameCollection, GameResource};
+use App\Repositories\GamesRepository;
 
 class GameController extends Controller
 {
+    public function __construct(
+        protected GamesRepository $games
+    ) { }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,9 @@ class GameController extends Controller
      */
     public function index()
     {
-        return response()->json(new GameCollection(Game::with('teamA.players', 'teamB.players')->get()));
+        $games = $this->games->getAll(['teamA.players', 'teamB.players']);    
+        
+        return response()->json(new GameCollection($games));
     }
 
     /**
@@ -30,15 +37,13 @@ class GameController extends Controller
         $validated = $request->validated();
         
         try {
-            $newGame = Game::create($validated);
-        
+            $newGame = $this->games->create($validated);
         } catch (\Exception $e) {
             return response()->json([
                 "message" => $e->getMessage()
             ], 400);
         }
         
-
         return response()->json(new GameResource($newGame));
     }
 
@@ -50,7 +55,7 @@ class GameController extends Controller
      */
     public function show($id)
     {
-        $game = Game::findOrFail($id);
+        $game = $this->games->getById($id);
 
         return response()->json(new GameResource($game));
     }
@@ -66,18 +71,15 @@ class GameController extends Controller
     {
         $validated = $request->validated();
 
-        $game = Game::findOrFail($id);
-
         try {
-            $game->update($validated);
-        
+            $this->games->update($id, $validated);        
         } catch (\Exception $e) {
             return response()->json([
                 "message" => $e->getMessage()
             ], 400);
         }
 
-        $modifiedGame = Game::findOrFail($id); 
+        $modifiedGame = $this->games->getById($id); 
 
         return response()->json(new GameResource($modifiedGame));
     }
@@ -90,9 +92,7 @@ class GameController extends Controller
      */
     public function destroy($id)
     {
-        $game = Game::findOrFail($id);
-    
-        $game->delete();
+        $this->games->delete($id);
 
         return response()->json([
             "message" => "Game {$id} deleted" 
