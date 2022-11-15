@@ -30,3 +30,5 @@ paths:
     $ref: "./paths/games/Games.yaml"
   /games/{id}:
     $ref: "./paths/games/GamesId.yaml"
+  /results:
+    $ref: "./paths/results/Results.yaml"

@@ -1,0 +1,11 @@
+get:
+  tags:
+    - Results
+  summary: "Get All Results"
+  operationId: getAllResults
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
