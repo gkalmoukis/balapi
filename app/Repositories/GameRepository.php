@@ -19,9 +19,9 @@ class GameRepository extends BaseRepository {
     }
 
     public function deleteResult($gameId){
-        return $this
-            ->getById($gameId)
-            ->result()
-            ->delete();
+        $game = $this->getById($gameId);
+        
+        return $game->result()->delete();
+        
     }
 }
