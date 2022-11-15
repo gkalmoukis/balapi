@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
-use App\Models\Game;
 use App\Http\Resources\{GameCollection, GameResource};
-use App\Repositories\GamesRepository;
+use App\Repositories\GameRepository;
 
 class GameController extends Controller
 {
     public function __construct(
-        protected GamesRepository $games
+        protected GameRepository $games
     ) { }
 
     /**

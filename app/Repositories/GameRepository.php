@@ -3,12 +3,11 @@
 namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
-use App\Models\Player;
+use App\Models\Game;
 
-class PlayersRepository extends BaseRepository {
+class GameRepository extends BaseRepository {
     
-    public function __construct(Player $model){
+    public function __construct(Game $model){
         parent::__construct($model);
     }
-
 }

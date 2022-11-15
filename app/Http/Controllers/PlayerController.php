@@ -6,9 +6,14 @@ use App\Http\Requests\StorePlayerRequest;
 use App\Http\Requests\UpdatePlayerRequest;
 use App\Models\Player;
 use App\Http\Resources\{PlayerResource, PlayerCollection};
-
+use App\Repositories\PlayerRepository;
 class PlayerController extends Controller
 {
+    
+    public function __construct(
+        protected PlayerRepository $players
+    ) {}
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,11 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        return response()->json(new PlayerCollection(Player::all()));
+        return response()->json(
+            new PlayerCollection(
+                $this->players->getAll()
+            )
+        );
     }
 
     /**
@@ -28,10 +37,10 @@ class PlayerController extends Controller
     public function store(StorePlayerRequest $request)
     {
         $validated = $request->validated();
-        
-        $newPlayer = Player::create($validated);
 
-        return response()->json(new PlayerResource($newPlayer));
+        return response()->json(new PlayerResource(
+            $this->players->create($validated)
+        ));
     }
 
     /**
@@ -42,9 +51,9 @@ class PlayerController extends Controller
      */
     public function show($id)
     {
-        $player = Player::findOrFail($id);
-
-        return response()->json(new PlayerResource($player));
+        return response()->json(new PlayerResource(
+            $this->players->getById($id)
+        ));
     }
 
     /**
@@ -58,11 +67,9 @@ class PlayerController extends Controller
     {
         $validated = $request->validated();
 
-        $player = Player::findOrFail($id);
+        $this->players->update($id, $validated);
 
-        $player->update($validated);
-
-        $modifiedPlayer = Player::findOrFail($id); 
+        $modifiedPlayer = $this->players->getById($id); 
 
         return response()->json(new PlayerResource($modifiedPlayer));
     }
@@ -75,9 +82,7 @@ class PlayerController extends Controller
      */
     public function destroy($id)
     {
-        $player = Player::findOrFail($id);
-    
-        $player->delete();
+        $this->players->delete($id);
 
         return response()->json([
             "message" => "Player {$id} deleted" 
