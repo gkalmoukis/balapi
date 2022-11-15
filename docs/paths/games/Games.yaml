@@ -1,0 +1,25 @@
+get:
+  tags:
+    - Games
+  summary: "Get All Games"
+  operationId: getAllGames
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+post:
+  tags:
+    - Games
+  summary: "Create Games"
+  operationId: createGames
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Game.yaml"
+  responses:
+    "201":
+      description: "Returns the new Game"

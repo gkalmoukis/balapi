@@ -1,0 +1,54 @@
+get:
+  tags:
+    - Games
+  summary: "Show Games"
+  operationId: showGames
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+put:
+  tags:
+    - Games
+  summary: "Edit Games"
+  operationId: editGames
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Game.yaml"
+    responses:
+      "200":
+        description: "ok"
+        content:
+          application/json:
+            schema: {}
+delete:
+  tags:
+    - Games
+  summary: "Delete Games"
+  operationId: deleteGames
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"

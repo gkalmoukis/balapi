@@ -1,0 +1,17 @@
+required:
+  - team_a_id
+  - team_b_id
+  - team_a_goals
+  - team_b_goals
+properties:
+  team_a_id:
+    type: number
+  team_b_id:
+    type: number
+  team_a_goals:
+    type: number
+  team_b_goals:
+    type: number
+  championship_id:
+    type: number
+type: object

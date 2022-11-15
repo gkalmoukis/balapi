@@ -26,3 +26,7 @@ paths:
     $ref: "./paths/championships/ChampionshipsId.yaml"
   /championships/{id}/close:
     $ref: "./paths/championships/ChampionshipsIdClose.yaml"
+  /games:
+    $ref: "./paths/games/Games.yaml"
+  /games/{id}:
+    $ref: "./paths/games/GamesId.yaml"
