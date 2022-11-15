@@ -1,0 +1,54 @@
+get:
+  tags:
+    - Players
+  summary: "Show Players"
+  operationId: showPlayers
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+put:
+  tags:
+    - Players
+  summary: "Edit Players"
+  operationId: editPlayers
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Player.yaml"
+    responses:
+      "200":
+        description: "ok"
+        content:
+          application/json:
+            schema: {}
+delete:
+  tags:
+    - Players
+  summary: "Delete Players"
+  operationId: deletePlayers
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"

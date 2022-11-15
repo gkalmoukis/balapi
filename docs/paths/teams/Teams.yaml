@@ -1,0 +1,25 @@
+get:
+  tags:
+    - Teams
+  summary: "Get All Teams"
+  operationId: getAllTeams
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+post:
+  tags:
+    - Teams
+  summary: "Create Teams"
+  operationId: createTeams
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Team.yaml"
+  responses:
+    "201":
+      description: "Returns the new Team"

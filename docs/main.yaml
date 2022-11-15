@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: "balapi"
+  contact:
+    email: gkal@happyonline.gr
+  version: 1.0.0
+servers:
+  - url: "http://127.0.0.1:8000/api"
+    description: Local
+paths:
+  /players:
+    $ref: "./paths/players/Players.yaml"
+  /players/{id}:
+    $ref: "./paths/players/PlayersId.yaml"
+  /teams:
+    $ref: "./paths/teams/Teams.yaml"
+  /teams/{id}:
+    $ref: "./paths/teams/TeamsId.yaml"

@@ -1,0 +1,54 @@
+get:
+  tags:
+    - Teams
+  summary: "Show Teams"
+  operationId: showTeams
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+put:
+  tags:
+    - Teams
+  summary: "Edit Teams"
+  operationId: editTeams
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Team.yaml"
+    responses:
+      "200":
+        description: "ok"
+        content:
+          application/json:
+            schema: {}
+delete:
+  tags:
+    - Teams
+  summary: "Delete Teams"
+  operationId: deleteTeams
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"

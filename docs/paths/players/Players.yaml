@@ -1,0 +1,25 @@
+get:
+  tags:
+    - Players
+  summary: "Get All Players"
+  operationId: getAllPlayers
+  responses:
+    "200":
+      description: "ok"
+      content:
+        application/json:
+          schema: {}
+post:
+  tags:
+    - Players
+  summary: "Create Players"
+  operationId: createPlayers
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/Player.yaml"
+  responses:
+    "201":
+      description: "Returns the new Player"
