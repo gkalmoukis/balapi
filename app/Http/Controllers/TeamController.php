@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
-use App\Models\Team;
 use App\Http\Resources\{TeamResource, TeamCollection};
+use App\Repositories\TeamRepository;
+
 class TeamController extends Controller
 {
+    public function __construct(
+        protected TeamRepository $teams
+    ) {}
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,11 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return response()->json(new TeamCollection(Team::all()));
+        return response()->json(
+            new TeamCollection(
+                $this->teams->getAll()
+            )
+        );
     }
 
     /**
@@ -28,7 +37,7 @@ class TeamController extends Controller
     {
         $validated = $request->validated();
         
-        $newTeam = Team::create($validated);
+        $newTeam = $this->teams->create($validated);
 
         return response()->json(new TeamResource($newTeam));
     }
@@ -41,7 +50,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        $team = Team::with('players')->findOrFail($id);
+        $team =  $this->teams->getById($id, ['players']);
 
         return response()->json(new TeamResource($team));
     }
@@ -57,11 +66,9 @@ class TeamController extends Controller
     {
         $validated = $request->validated();
 
-        $team = Team::findOrFail($id);
+        $this->teams->update($id, $validated);
 
-        $team->update($validated);
-
-        $modifiedTeam = Team::findOrFail($id); 
+        $modifiedTeam = $this->teams->getById($id); 
 
         return response()->json(new TeamResource($modifiedTeam));
     }
@@ -74,9 +81,7 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        $team = Team::findOrFail($id);
-    
-        $team->delete();
+        $this->teams->delete($id);
 
         return response()->json([
             "message" => "Team {$id} deleted" 

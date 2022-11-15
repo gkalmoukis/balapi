@@ -6,10 +6,14 @@ use App\Http\Requests\StoreChampionshipRequest;
 use App\Http\Requests\UpdateChampionshipRequest;
 use App\Http\Resources\{ChampionshipCollection, ChampionshipResource, TeamCollection};
 use App\Models\{Championship, Team};
-use Carbon\Carbon;
+use App\Repositories\TeamRepository;
 
 class ChampionshipController extends Controller
 {
+    public function __construct(
+        protected TeamRepository $teams
+    ) {}
+
     /**
      * Display a listing of the resource.
      *
@@ -67,16 +71,9 @@ class ChampionshipController extends Controller
             return $game->team_b_id;
         });
 
-        $teams = Team::with('players')
-            ->with('results')
-            ->withSum(['results' => function ($query) use ($id){
-                $query->championship($id);
-            }], 'points')
-            ->orderBy('results_sum_points', 'desc')
-            ->whereIn('id', array_merge($participatingATeams->unique()->toArray(), $participatingBTeams->unique()->toArray()))
-            ->get();
+        $participatingTeams = array_merge($participatingATeams->unique()->toArray(), $participatingBTeams->unique()->toArray());
 
-        $championship->teams =  $teams;
+        $championship->teams =  $this->teams->getChampionshipLeaderboard($id, $participatingTeams);
        
         return response()->json(new ChampionshipResource($championship));
     }
