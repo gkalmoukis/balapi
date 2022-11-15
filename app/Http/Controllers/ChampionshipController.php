@@ -6,12 +6,14 @@ use App\Http\Requests\StoreChampionshipRequest;
 use App\Http\Requests\UpdateChampionshipRequest;
 use App\Http\Resources\{ChampionshipCollection, ChampionshipResource, TeamCollection};
 use App\Models\{Championship, Team};
+use App\Repositories\ChampionshipRepository;
 use App\Repositories\TeamRepository;
 
 class ChampionshipController extends Controller
 {
     public function __construct(
-        protected TeamRepository $teams
+        protected TeamRepository $teams,
+        protected ChampionshipRepository $championships
     ) {}
 
     /**
@@ -47,7 +49,7 @@ class ChampionshipController extends Controller
     {
         $validated = $request->validated();
         
-        $newChampionship = Championship::create($validated);
+        $newChampionship = $this->championships->create($validated);
 
         return response()->json(new ChampionshipResource($newChampionship));
     }
@@ -60,21 +62,12 @@ class ChampionshipController extends Controller
      */
     public function show($id)
     {
-        $championship = Championship::with('games')->findOrFail($id);
-        
-        $participatingATeams = $championship->games->map(function ($game){
-            
-            return $game->team_a_id;
-        });
-       
-        $participatingBTeams = $championship->games->map(function ($game){
-            return $game->team_b_id;
-        });
+        $championship = $this->championships->getById($id);
 
-        $participatingTeams = array_merge($participatingATeams->unique()->toArray(), $participatingBTeams->unique()->toArray());
+        $participatingTeams = $this->championships->getParticipantingTeams($championship->id);
 
         $championship->teams =  $this->teams->getChampionshipLeaderboard($id, $participatingTeams);
-       
+        
         return response()->json(new ChampionshipResource($championship));
     }
 
@@ -89,11 +82,9 @@ class ChampionshipController extends Controller
     {
         $validated = $request->validated();
 
-        $championship = Championship::findOrFail($id);
+        $this->championships->update($id, $validated);
 
-        $championship->update($validated);
-
-        $modifiedChampionship = Championship::findOrFail($id); 
+        $modifiedChampionship = $this->championships->getById($id); 
 
         return response()->json(new ChampionshipResource($modifiedChampionship));
     }
@@ -107,13 +98,9 @@ class ChampionshipController extends Controller
      */
     public function updateStatus($id)
     {
-        $championship = Championship::findOrFail($id);
+        $this->championships->close($id);
 
-        $championship->update([
-            "finished_at" => \Carbon\Carbon::now()
-        ]);
-
-        $modifiedChampionship = Championship::findOrFail($id); 
+        $modifiedChampionship = $this->championships->getById($id); 
 
         return response()->json(new ChampionshipResource($modifiedChampionship));
     }
@@ -126,9 +113,13 @@ class ChampionshipController extends Controller
      */
     public function destroy($id)
     {
-        $championship = Championship::findOrFail($id);
-    
-        $championship->delete();
+        try {
+            $this->championships->delete($id);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => $e->getMessage() 
+            ]);
+        }
 
         return response()->json([
             "message" => "Championship {$id} deleted" 
