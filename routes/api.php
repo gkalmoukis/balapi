@@ -30,7 +30,7 @@ Route::group([
     'prefix' => 'championships'
 ], function ()
 {
-    Route::get('/{id}/finished', [ChampionshipController::class, 'updateStatus']);
+    Route::get('/{id}/close', [ChampionshipController::class, 'updateStatus']);
 });
 Route::apiResource('championships', ChampionshipController::class);
 Route::group([
