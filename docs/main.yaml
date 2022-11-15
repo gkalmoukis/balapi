@@ -16,3 +16,7 @@ paths:
     $ref: "./paths/teams/Teams.yaml"
   /teams/{id}:
     $ref: "./paths/teams/TeamsId.yaml"
+  /teams/{id}/players:
+    $ref: "./paths/teams/TeamsIdPlayers.yaml"
+  /teams/{teamId}/players/{playerId}:
+    $ref: "./paths/teams/TeamsIdPlayersId.yaml"

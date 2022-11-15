@@ -1,0 +1,19 @@
+delete:
+  tags:
+    - Teams
+  summary: "Detach Players"
+  operationId: detachPlayers
+  parameters:
+    - name: teamId
+      in: path
+      required: true
+      schema:
+        type: number
+    - name: playerId
+      in: path
+      required: true
+      schema:
+        type: number
+  responses:
+    "200":
+      description: "ok"

@@ -1,0 +1,23 @@
+put:
+  tags:
+    - Teams
+  summary: "Attach Players"
+  operationId: attachPlayers
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref : "../../schemas/AttachedPlayer.yaml"
+    responses:
+      "200":
+        description: "ok"
+        content:
+          application/json:
+            schema: {}

@@ -1,0 +1,6 @@
+required:
+  - player_id
+properties:
+  player_id:
+    type: number
+type: object
