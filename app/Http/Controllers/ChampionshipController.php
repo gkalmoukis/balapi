@@ -23,19 +23,8 @@ class ChampionshipController extends Controller
      */
     public function index()
     {
-        $championships = Championship::all();
-
-        if(request()->filled('status')){
-            
-            if(request()->input('status') == 'open'){
-                $championships = Championship::open()->get();
-            }
-
-            if(request()->input('status') == 'finished'){
-                $championships = Championship::finished()->get();
-            }
-        }
-
+        $championships = $this->championships->getAll([], request()->all());
+        
         return response()->json(new ChampionshipCollection($championships));
     }
 

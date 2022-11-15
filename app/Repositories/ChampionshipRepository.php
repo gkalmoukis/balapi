@@ -11,6 +11,14 @@ class ChampionshipRepository extends BaseRepository {
         parent::__construct($model);
     }
 
+    public function getAll(array $relations = [], $filters = []) {
+        return $this
+            ->model
+            ->filterBy($filters)
+            ->with($relations)
+            ->get();
+    }
+
     public function getParticipantingTeams($champtionshipId)
     {
         $championship = $this->getById($champtionshipId);
