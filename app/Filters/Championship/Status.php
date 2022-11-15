@@ -17,7 +17,7 @@ class Status implements FilterInterface
     {
         switch ($value) {
             case 'closed':
-                $this->query->finished();
+                $this->query->closed();
                 break;
             case 'open':
                 $this->query->open();

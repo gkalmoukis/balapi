@@ -22,7 +22,7 @@ class Championship extends Model
         return $query->whereNull('finished_at');
     }
 
-    public function scopeFinished($query)
+    public function scopeClosed($query)
     {
         return $query->whereNotNull('finished_at');
     }
