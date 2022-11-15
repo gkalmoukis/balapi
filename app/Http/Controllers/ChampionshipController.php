@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChampionshipRequest;
 use App\Http\Requests\UpdateChampionshipRequest;
-use App\Http\Resources\{ChampionshipCollection, ChampionshipResource, TeamCollection};
-use App\Models\{Championship, Team};
+use App\Http\Resources\{ChampionshipCollection, ChampionshipResource};
+use App\Models\{Championship};
 use App\Repositories\ChampionshipRepository;
 use App\Repositories\TeamRepository;
 
