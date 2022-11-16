@@ -2,6 +2,16 @@ get:
   tags:
     - Championships
   summary: "Get All Championships"
+  parameters:
+    - in: query
+      name: status
+      schema:
+        type: string
+        enum:
+         - open
+         - closed
+      required: false
+      description: Status of championship
   operationId: getAllChampionships
   responses:
     "200":
