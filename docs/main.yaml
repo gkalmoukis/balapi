@@ -7,6 +7,8 @@ info:
 servers:
   - url: "http://127.0.0.1:8000/api"
     description: Local
+  - url: "https://balaki.happyoffline.eu/api"
+    description: Production
 paths:
   /players:
     $ref: "./paths/players/Players.yaml"
