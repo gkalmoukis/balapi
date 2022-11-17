@@ -51,8 +51,8 @@ class ChampionshipController extends Controller
      */
     public function show($id)
     {
-        $championship = $this->championships->getById($id);
-
+        $championship = $this->championships->getById($id, ['games']);
+        
         $participatingTeams = $this->championships->getParticipantingTeams($championship->id);
 
         $championship->teams =  $this->teams->getChampionshipLeaderboard($id, $participatingTeams);
