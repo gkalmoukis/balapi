@@ -3,10 +3,8 @@
 namespace App\Observers;
 
 use App\Models\{Game};
-use Illuminate\Support\Facades\Log;
-use Spatie\SlackAlerts\Facades\SlackAlert;
 use App\Repositories\{ResultRepository, GameRepository};
-use App\Services\ResultService;
+use App\Services\{ResultService, NotificationService};
 
 class GameObserver
 {
@@ -36,16 +34,14 @@ class GameObserver
     public function created(Game $game)
     {
         $resultService = new ResultService($game);
+        $notificationService = new NotificationService($game);
         
         $this->results->create($resultService->buildResult());
         
-        $slackLogText = (! is_null($game->championship_id)) ? ":soccer: {$game->championship->title} | "  : ":soccer: ";  
-        $slackLogText .=  "{$game->teamA->name} {$game->team_a_goals} - {$game->team_b_goals} {$game->teamB->name} :soccer:";
-        
-        Log::info($slackLogText);
+        $notificationService->createMessage()->toFile();
 
         if(config('slack-alerts.must_notify')){
-            SlackAlert::message($slackLogText);
+            $notificationService->createMessage()->toSlack();
         }
     }
 
