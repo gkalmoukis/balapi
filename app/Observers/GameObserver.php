@@ -6,6 +6,7 @@ use App\Models\{Game, Result};
 use Illuminate\Support\Facades\Log;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 use App\Repositories\{ResultRepository, GameRepository};
+use App\Services\ResultService;
 
 class GameObserver
 {
@@ -34,14 +35,9 @@ class GameObserver
      */
     public function created(Game $game)
     {
-        $result = [
-            "game_id" => $game->id,
-            "team_id" => ($game->team_a_goals > $game->team_b_goals) ? $game->team_a_id : $game->team_b_id,
-            "points" => 1,
-            "championship_id" => $game->championship_id ?? null
-        ];
-
-        $this->results->create($result);
+        $resultService = new ResultService($game);
+        dd($resultService->buildResult());
+        $this->results->create($resultService->buildResult());
         
         $slackLogText = (! is_null($game->championship_id)) ? ":soccer: {$game->championship->title} | "  : ":soccer: ";  
         $slackLogText .=  "{$game->teamA->name} {$game->team_a_goals} - {$game->team_b_goals} {$game->teamB->name} :soccer:";
