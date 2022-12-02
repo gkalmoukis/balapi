@@ -26,7 +26,7 @@ class StorePlayerRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'number' => ['required', 'numeric'],
-            'image' => ['required', 'string'],
+            'image' => ['string'],
         ];
     }
 }
