@@ -7,11 +7,14 @@ use App\Http\Requests\UpdatePlayerRequest;
 use App\Models\Player;
 use App\Http\Resources\{PlayerResource, PlayerCollection};
 use App\Repositories\PlayerRepository;
+use App\Services\MediaService;
+
 class PlayerController extends Controller
 {
     
     public function __construct(
-        protected PlayerRepository $players
+        protected PlayerRepository $players,
+        protected MediaService $media
     ) {}
     
     /**
@@ -37,6 +40,10 @@ class PlayerController extends Controller
     public function store(StorePlayerRequest $request)
     {
         $validated = $request->validated();
+
+        if($request->filled('image')){
+            $validated['image'] = $this->media->storeFile($validated['image'], 'players');   
+        }
 
         return response()->json(new PlayerResource(
             $this->players->create($validated)
@@ -66,6 +73,13 @@ class PlayerController extends Controller
     public function update(UpdatePlayerRequest $request, $id)
     {
         $validated = $request->validated();
+
+        $player = $this->players->getById($id);
+
+        if($request->filled('image')){
+            $this->media->deleteMedia($player->image);
+            $validated['image'] = $this->media->storeFile($validated['image'], 'players');   
+        }
 
         $this->players->update($id, $validated);
 

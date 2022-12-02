@@ -6,4 +6,6 @@ properties:
     type: string
   number:
     type: number
+  string:
+    type: number
 type: object

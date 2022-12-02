@@ -25,7 +25,8 @@ class UpdatePlayerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'number' => ['required', 'numeric']
+            'number' => ['required', 'numeric'],
+            'image' => ['required', 'string']
         ];
     }
 }

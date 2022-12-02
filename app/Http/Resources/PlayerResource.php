@@ -18,6 +18,7 @@ class PlayerResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "number" => $this->number,
+            "image" => $this->image,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at
         ];
